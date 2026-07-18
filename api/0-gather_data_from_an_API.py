@@ -7,17 +7,23 @@ import requests
 import sys
 
 if __name__ == '__main__':
-    user_url = ("https://jsonplaceholder.typicode.com/users/{}".
-                format(sys.argv[1]))
-    user_data = requests.get(user_url).json()
-    user_name = user_data.get('name')
-    todos_url = ("https://jsonplaceholder.typicode.com/todos?userId={}".
-                 format(sys.argv[1]))
-    todos = requests.get(todos_url).json()
-    completed_todos = list(filter(lambda todo: todo['completed'], todos))
-    print('Employee {} is done with tasks({}/{}):'.format(
-        user_name,
-        len(completed_todos),
-        len(todos)))
-    for item in completed_todos:
-        print('\t {}'.format(item.get('title')))
+    employee_id = sys.argv[1]
+    url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
+
+    todo = "https://jsonplaceholder.typicode.com/todos?userId={}"
+    todo = todo.format(employee_id)
+
+    user_data = requests.request("GET", url).json()
+    todos = requests.request("GET", todo).json()
+
+    employee_name = user_data.get("name")
+    total_tasks = list(filter(lambda x: (x["completed"] is True), todos))
+    task_com = len(total_tasks)
+    total_task_done = len(todos)
+
+    print(
+        "Employee {} is done with tasks({}/{}):".format(
+            employee_name, task_com, total_task_done
+        )
+    )
+    [print("\t {}".format(task.get("title"))) for task in total_tasks]

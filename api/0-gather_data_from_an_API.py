@@ -1,22 +1,24 @@
 #!/usr/bin/python3
-"""Get TODOs"""
+"""get TODO list"""
 
 import json
-
 import requests
 import sys
-
-if __name__ == '__main__':
-    user_url = ("https://jsonplaceholder.typicode.com/users/{}".
-                format(sys.argv[1]))
-    user_data = requests.get(user_url)
-    todos_url = ("https://jsonplaceholder.typicode.com/users/{}/todos".
-                 format(sys.argv[1]))
-    todos = json.loads(requests.get(todos_url).text)
-    completed_todos = list(filter(lambda todo: todo['completed'], todos))
-    print('Employee {} is done with tasks({}/{}):'.format(
-        json.loads(user_data.text)['name'],
-        len(completed_todos),
-        len(todos)))
-    for item in completed_todos:
-        print('\t {}'.format(item['title']))
+if __name__ == "__main__":
+    link = "https://jsonplaceholder.typicode.com/users/{}".format(sys.argv[1])
+    res = requests.get(link)
+    user = json.loads(res.text)
+    num = sys.argv[1]
+    link = "https://jsonplaceholder.typicode.com/users/{}/todos".format(num)
+    res = requests.get(link)
+    todos = json.loads(res.text)
+    done = []
+    for i in todos:
+        if i['completed']:
+            done.append(i)
+    print("Employee {} is done with tasks({}/{}):".format(
+                                                          user['name'],
+                                                          len(done),
+                                                          len(todos)))
+    for i in done:
+        print("\t {}".format(i["title"]))

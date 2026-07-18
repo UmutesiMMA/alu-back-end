@@ -15,8 +15,8 @@ if __name__ == '__main__':
     todos = json.loads(requests.get(todos_url).text)
     completed_todos = list(filter(lambda todo: todo['completed'], todos))
     print('Employee {} is done with tasks({}/{}):'.format(
-        json.loads(user_data.text)['name'],
+        json.loads(user_data.text).get('name'),
         len(completed_todos),
         len(todos)))
     for item in completed_todos:
-        print('\t {}'.format(item['title']))
+        print('\t {}'.format(item.get('title')))

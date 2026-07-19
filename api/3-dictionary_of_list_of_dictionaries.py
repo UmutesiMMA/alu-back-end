@@ -24,5 +24,5 @@ if __name__ == '__main__':
             assignedTodos.append(todo_dict)
         jsonObject[userId] = assignedTodos
 
-    with open("{}.json".format(userId), 'w', newline='') as jsonfile:
+    with open("todo_all_employees.json", 'w', newline='') as jsonfile:
         json.dump(jsonObject, jsonfile)

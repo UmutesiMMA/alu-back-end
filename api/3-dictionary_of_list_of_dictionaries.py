@@ -13,10 +13,9 @@ if __name__ == '__main__':
     jsonObject = {}
     for user in user_data:
         userId = user.get('id')
-        todo_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
-        userId)
-        todos = requests.request("GET", todo_url).json()
-        assignedTodos=[]
+        todo_url = "https://jsonplaceholder.typicode.com/todos?userId={}"
+        todos = requests.request("GET", todo_url.format(userId)).json()
+        assignedTodos = []
         for todo in todos:
             todo_dict = {}
             todo_dict['username'] = user.get('username')
@@ -24,6 +23,6 @@ if __name__ == '__main__':
             todo_dict['completed'] = todo.get('completed')
             assignedTodos.append(todo_dict)
         jsonObject[userId] = assignedTodos
-       
+
     with open("{}.json".format(userId), 'w', newline='') as jsonfile:
-            json.dump(jsonObject, jsonfile)
+        json.dump(jsonObject, jsonfile)

@@ -8,13 +8,12 @@ from sys import argv
 
 if __name__ == '__main__':
     employee_id = argv[1]
-    url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
+    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
 
-    todo = "https://jsonplaceholder.typicode.com/todos?userId={}"
-    todo = todo.format(employee_id)
+    todo_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
 
-    user_data = requests.request("GET", url).json()
-    todos = requests.request("GET", todo).json()
+    user_data = requests.request("GET", user_url).json()
+    todos = requests.request("GET", todo_url).json()
 
     with open("{}.csv".format(employee_id), 'w', newline='') as csvfile:
         taskwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)

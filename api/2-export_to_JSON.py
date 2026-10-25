@@ -19,8 +19,8 @@ if __name__ == '__main__':
     assignedTodos = []
     for todo in todos:
         todo_dict = {}
-        todo_dict['task'] = todo_url.get('title')
-        todo_dict['completed'] = todo_url.get('completed')
+        todo_dict['task'] = todo.get('title')
+        todo_dict['completed'] = todo.get('completed')
         todo_dict['username'] = user_name
         assignedTodos.append(todo_dict)
     jsonObject = {}
